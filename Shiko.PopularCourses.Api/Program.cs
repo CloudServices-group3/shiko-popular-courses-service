@@ -9,3 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<PopularCourseService>();
 
 var app = builder.Build();
+
+app.MapControllers();
+
+app.Run();
