@@ -10,6 +10,8 @@ builder.Services.AddSingleton<PopularCourseService>();
 
 var app = builder.Build();
 
+app.MapOpenApi();
+
 app.MapControllers();
 
 app.Run();
