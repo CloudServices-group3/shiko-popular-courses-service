@@ -23,7 +23,7 @@ public class PopularCourseService
             CourseId = request.CourseId,
             Title = request.Title,
             Description = request.Description,
-            ImageUrl = request.ImageUrl,
+            IconUrl = request.IconUrl,
             ClickCount = 1,
             LastClickedAt = DateTime.UtcNow
         };
