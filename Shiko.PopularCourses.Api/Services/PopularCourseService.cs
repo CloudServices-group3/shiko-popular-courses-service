@@ -1,19 +1,29 @@
+using Microsoft.EntityFrameworkCore;
+using Shiko.PopularCourses.Api.Data;
 using Shiko.PopularCourses.Api.Models;
 
 namespace Shiko.PopularCourses.Api.Services;
 
 public class PopularCourseService
 {
-    private readonly List<PopularCourse> _courses = [];
+    private readonly AppDbContext _context;
 
-    public void TrackClick(TrackCourseClickRequest request)
+    public PopularCourseService(AppDbContext context)
     {
-        var existingCourse = _courses.FirstOrDefault(c => c.CourseId == request.CourseId);
+        _context = context;
+    }
+
+    public async Task TrackClickAsync(TrackCourseClickRequest request)
+    {
+        var existingCourse = await _context.PopularCourses
+            .FirstOrDefaultAsync(c => c.CourseId == request.CourseId);
 
         if (existingCourse is not null)
         {
             existingCourse.ClickCount++;
             existingCourse.LastClickedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
 
             return;
         }
@@ -28,14 +38,16 @@ public class PopularCourseService
             LastClickedAt = DateTime.UtcNow
         };
 
-        _courses.Add(newCourse);
+        _context.PopularCourses.Add(newCourse);
+
+        await _context.SaveChangesAsync();
     }
 
-    public List<PopularCourse> GetPopularCourses()
+    public async Task<List<PopularCourse>> GetPopularCoursesAsync()
     {
-        return _courses
+        return await _context.PopularCourses
             .OrderByDescending(c => c.ClickCount)
             .Take(4)
-            .ToList();
+            .ToListAsync();
     }
 }
