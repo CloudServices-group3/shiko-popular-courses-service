@@ -1,4 +1,6 @@
 using Shiko.PopularCourses.Api.Services;
+using Microsoft.EntityFrameworkCore;
+using Shiko.PopularCourses.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
