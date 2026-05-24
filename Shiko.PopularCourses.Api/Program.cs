@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
-builder.Services.AddSingleton<PopularCourseService>();
+builder.Services.AddScoped<PopularCourseService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
