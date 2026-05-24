@@ -16,17 +16,17 @@ public class PopularCoursesController : ControllerBase
     }
 
     [HttpPost("click")]
-    public IActionResult TrackClick(TrackCourseClickRequest request)
+    public async Task<IActionResult> TrackClick(TrackCourseClickRequest request)
     {
-        _popularCourseService.TrackClick(request);
+        await _popularCourseService.TrackClickAsync(request);
 
         return Ok();
     }
 
     [HttpGet]
-    public IActionResult GetPopularCourses()
+    public async Task<IActionResult> GetPopularCourses()
     {
-        var courses = _popularCourseService.GetPopularCourses();
+        var courses = await _popularCourseService.GetPopularCoursesAsync();
 
         return Ok(courses);
     }
