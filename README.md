@@ -136,6 +136,14 @@ POST /api/popular-courses/click
 
 ---
 
+## Planned Azure Deployment
+
+This service is planned to be deployed as an Azure App Service.
+
+The PostgreSQL connection string should be configured through Azure App Service environment variables or connection strings, not hardcoded in source control.
+
+Local development uses `appsettings.json`, while production should use Azure configuration.
+
 # Author
 
 Developed as part of the EC Utbildning LMS group project.
